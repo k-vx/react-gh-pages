@@ -1,0 +1,30 @@
+a{
+  text-decoration: none;
+}
+
+.nav-bottom{
+  margin-bottom: 20px;
+}
+
+.capitalized{
+  text-transform: capitalize;
+}
+
+.info-card{
+  margin: 20px;
+}
+
+
+/* footer */
+#site-footer {
+  padding-top: 10px;
+  padding: 0 0 1.5em 0;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 1em;
+  margin: 0;
+  border-top: 1px solid #eee;
+  color: #666;
+}
