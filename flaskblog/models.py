@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from markdown import markdown
+
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -41,13 +43,34 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # 不知道怎么实现不同的分类每个sub_id分别自动增加，暂时用手写
+    sub_id = db.Column(db.Integer, nullable=True)
     title = db.Column(db.String(120), unique=True, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     # user in Foreignkey is table name
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('post_category.id'), nullable=False)
+
+    def post_content_render_markdown(self):
+        return markdown(self.content, extensions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+            ])
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+
+class PostCategory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    posts = db.relationship('Post', backref='category', lazy=True)
+
+    def __repr__(self):
+        return f"Post('{self.id}', '{self.name}')"
+

@@ -13,8 +13,8 @@
                 </div>
             {% endif %}
         </div>
-        <h2 class="article-title">{{ post.title }}</h2>
-        <p class="article-content">{{ post.content }}</p>
+        <h1 class="article-title">{{ post.title }}</h1>
+        <p class="markdown-body article-content">{{ post.post_content_render_markdown() | safe }}</p>
     </div>
 </article>
 

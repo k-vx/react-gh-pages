@@ -10,16 +10,12 @@ from flaskblog.config import Config
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
-
 login_manager = LoginManager()
 # if a view add decorator 'login_required', but not logged in, then will redirenct to this view
 login_manager.login_view = 'users.login'  
 login_manager.login_message_category = 'info' # add some style to flash msg
-
 admin = Admin(template_mode='bootstrap3')
-
 mail = Mail()
-
 
 # Create customized model view class
 class CustomGeneralModelView(ModelView):
@@ -43,9 +39,10 @@ def create_app(config_class=Config):
 
     # init admin
     admin.init_app(app)
-    from flaskblog.models import User, Post
+    from flaskblog.models import User, Post, PostCategory
     admin.add_view(CustomGeneralModelView(User, db.session))
     admin.add_view(PostModelView(Post, db.session))
+    admin.add_view(CustomGeneralModelView(PostCategory, db.session))
 
     # import instance of blueprint
     from flaskblog.users.routes import users
