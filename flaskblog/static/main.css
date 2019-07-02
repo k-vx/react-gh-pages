@@ -3,6 +3,10 @@ body {
     color: #333333;
     margin-top: 5rem;
   }
+
+  a.link-no-dec:hover {
+    text-decoration: none;
+  }
   
   h1, h2, h3, h4, h5, h6 {
     color: #444444;
@@ -34,6 +38,7 @@ body {
   
   .article-title {
     color: #444444;
+    text-align: center;
   }
   
   a.article-title:hover {

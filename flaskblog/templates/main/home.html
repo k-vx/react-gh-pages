@@ -1,5 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
+    {% if category %}
+        <div class="content-section">
+            <p class="article-content">{{ category.description }}</p> 
+        </div>
+    {% endif %}
     {% for post in posts.items %}
         <article class="media content-section">
             <div class="media-body">
@@ -9,7 +14,8 @@
                     <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
                 </div>
                 <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
-                <p class="markdown-body article-content">{{ post.post_content_render_markdown() | safe }}</p>
+                <!-- <p class="markdown-body article-content">{{ post.post_content_render_markdown() | safe }}</p> -->
+                <a class="link-no-dec" href="{{ url_for('main.posts_by_category', category=post.category.name) }}">{{ post.category.name }}</a>
             </div>
         </article>
     {% endfor %}
@@ -26,3 +32,21 @@
         {% endif %}
     {% endfor %}
 {% endblock content %}
+
+{% block right_nav %}
+<div class="content-section">
+    <h3>Our Sidebar</h3>
+    <p class='text-muted'>You can put any information here you'd like.
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-light">
+            <a class="link-no-dec" href="{{ url_for('main.home') }}">All</a>
+        </li>
+        {% for category in post_categories %}
+            <li class="list-group-item list-group-item-light">
+                <a class="link-no-dec" href="{{ url_for('main.posts_by_category', category=category.name) }}">{{ category.name | capitalize }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    </p>
+</div>
+{% endblock right_nav %}

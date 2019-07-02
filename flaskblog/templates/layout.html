@@ -9,20 +9,6 @@
 
     <!-- custom css -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <style>
-        .markdown-body {
-            box-sizing: border-box;
-            min-width: 200px;
-            max-width: 980px;
-            margin: 0 auto;
-            padding: 45px;
-        }
-        @media (max-width: 767px) {
-            .markdown-body {
-                padding: 15px;
-            }
-        }
-    </style>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='github-markdown-css.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='code-hight-github.css') }}">    
     {% if title %}
@@ -74,10 +60,17 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock content %}
         </div>
         <div class="col-md-4">
             <div class="content-section">
+                    <h3>Our Sidebar</h3>
+                    <p class='text-muted'>You can put any information here you'd like.</p>    
+            </div>
+            {% block right_nav %}
+            {% endblock right_nav %}
+            <!-- <div class="content-section">
                 <h3>Our Sidebar</h3>
                 <p class='text-muted'>You can put any information here you'd like.
                 <ul class="list-group">
@@ -87,7 +80,7 @@
                     <li class="list-group-item list-group-item-light">etc</li>
                 </ul>
                 </p>
-            </div>
+            </div> -->
         </div>
     </div>
 </main>
