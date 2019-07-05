@@ -47,7 +47,7 @@ class User(db.Model, UserMixin):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # 不知道怎么实现不同的分类每个sub_id分别自动增加，暂时用手写
-    sub_id = db.Column(db.Integer, nullable=True)
+    sub_id = db.Column(db.Integer, nullable=True, default=1)
     title = db.Column(db.String(120), unique=True, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
@@ -62,7 +62,7 @@ class Post(db.Model):
             ])
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
+        return f"Post('{self.title}', {self.category.name}, '{self.date_posted}')"
 
 
 class PostCategory(db.Model):
@@ -72,5 +72,38 @@ class PostCategory(db.Model):
     posts = db.relationship('Post', backref='category', lazy=True)
 
     def __repr__(self):
-        return f"Post('{self.id}', '{self.name}')"
+        return f"Post Category('{self.id}', '{self.name}')"
 
+class Solution(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    # 不知道怎么实现不同的分类每个sub_id分别自动增加，暂时用手写
+    sub_id = db.Column(db.Integer, nullable=True, default=1)
+    title = db.Column(db.String(120), unique=True, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    description = db.Column(db.Text, nullable=False)
+    solution = db.Column(db.Text, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('solution_category.id'), nullable=False)
+
+    def description_render_markdown(self):
+        return markdown(self.description, extensions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+            ])
+
+    def solution_render_markdown(self):
+        return markdown(self.solution, extensions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+            ])
+
+    def __repr__(self):
+        return f"Solution('{self.title}', '{self.date_posted}')"
+
+class SolutionCategory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    solutions = db.relationship('Solution', backref='category', lazy=True)
+
+    def __repr__(self):
+        return f"Solution Category('{self.id}', '{self.name}')"

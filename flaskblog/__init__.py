@@ -24,8 +24,8 @@ class CustomGeneralModelView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
 
-class PostModelView(CustomGeneralModelView):
-    # hide content column in Post, it's too much
+class NoContentModelView(CustomGeneralModelView):
+    # hide content column in some tables, it's too much to show
     column_exclude_list = ['content']
 
 def create_app(config_class=Config):
@@ -39,19 +39,26 @@ def create_app(config_class=Config):
 
     # init admin
     admin.init_app(app)
-    from flaskblog.models import User, Post, PostCategory
+    from flaskblog.models import (User, Post, PostCategory, Solution, 
+    SolutionCategory,
+    )
     admin.add_view(CustomGeneralModelView(User, db.session))
-    admin.add_view(PostModelView(Post, db.session))
+    admin.add_view(NoContentModelView(Post, db.session))
     admin.add_view(CustomGeneralModelView(PostCategory, db.session))
+    admin.add_view(NoContentModelView(Solution, db.session))
+    admin.add_view(CustomGeneralModelView(SolutionCategory, db.session))
+
 
     # import instance of blueprint
     from flaskblog.users.routes import users
     from flaskblog.posts.routes import posts
     from flaskblog.main.routes import main
     from flaskblog.errors.handlers import errors
+    from flaskblog.solutions.routes import solutions
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
     app.register_blueprint(errors)
+    app.register_blueprint(solutions)
 
     return app
