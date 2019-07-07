@@ -8,30 +8,34 @@
     {% for solution in solutions.items %}
         <article class="media content-section">
             <div class="media-body">
-                <h2><a class="article-title" href="{{ url_for('solutions.solution', solution_id=solution.id) }}">{{ solution.title }}</a></h2>
+                <h2><a target="blank" class="article-title" href="{{ url_for('solutions.solution', solution_id=solution.id) }}">{{ solution.title }}</a></h2>
                 <a class="link-no-dec" href="{{ url_for('solutions.solutions_by_category', category=solution.category.name) }}">{{ solution.category.name }}</a>
-                <span class="text-muted">组内id：{{ solution.sub_id }}</span>
+                <span class="text-muted">sub id：{{ solution.sub_id }}</span>
             </div>
         </article>
     {% endfor %}
     <!-- right_current include current page, so it is 2 -->
-    {% for page_num in solutions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-        {% if page_num %}
-            {% if solutions.page == page_num %}
-                <a class="btn btn-info mb-4" href="{{ url_for('solutions.solutions_all', page=page_num) }}">{{ page_num }}</a>
-            {% else %}
-                <a class="btn btn-outline-info mb-4" href="{{ url_for('solutions.solutions_all', page=page_num) }}">{{ page_num }}</a>
-            {% endif %}
-        {% else %}
-            ...
-        {% endif %}
-    {% endfor %}
+    <div class="row">
+        <div class="col-center-block">
+            {% for page_num in solutions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if solutions.page == page_num %}
+                        <a class="btn btn-info mb-4" href="{{ url_for('solutions.solutions_all', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-info mb-4" href="{{ url_for('solutions.solutions_all', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}
 
-{% block right_nav %}
+{% block right_nav_categories %}
 <div class="content-section">
-    <h3>Our Sidebar</h3>
-    <p class='text-muted'>You can put any information here you'd like.
+    <h3>Solution Categories</h3>
+    <p class='text-muted'>
     <ul class="list-group">
         <li class="list-group-item list-group-item-light">
             <a class="link-no-dec" href="{{ url_for('solutions.solutions_all') }}">All</a>
@@ -44,4 +48,13 @@
     </ul>
     </p>
 </div>
-{% endblock right_nav %}
+{% endblock right_nav_categories %}
+
+{% block scripts %}
+{{super()}}
+$(document).ready(function(){
+    $("article").click(function(){
+        window.open($(this).find('a').attr("href"),"blank");
+    })
+});
+{% endblock %}

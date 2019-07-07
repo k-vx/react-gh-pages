@@ -14,7 +14,7 @@ login_manager = LoginManager()
 # if a view add decorator 'login_required', but not logged in, then will redirenct to this view
 login_manager.login_view = 'users.login'  
 login_manager.login_message_category = 'info' # add some style to flash msg
-admin = Admin(template_mode='bootstrap3')
+admin = Admin(template_mode='bootstrap3', url='/leoadmin')
 mail = Mail()
 
 # Create customized model view class

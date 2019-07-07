@@ -1,22 +1,17 @@
 {% extends 'layout.html' %}
 {% block content %}
-<article class="media content-section">
+<div class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
-            <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
-            <a class="mr-2" href="#">{{ post.author.username }}</a>
-            <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-            {% if post.author == current_user %}
-                <div>
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
-                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                </div>
-            {% endif %}
             <h1 class="article-title">{{ post.title }}</h1>
+            <span>
+                <span class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</span>
+                <a class="link-no-dec" href="{{ url_for('main.posts_by_category', category=post.category.name) }}">{{ post.category.name }}</a>
+            </span>
         </div>
         <p class="markdown-body article-content">{{ post.post_content_render_markdown() | safe }}</p>
     </div>
-</article>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -38,3 +33,7 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block right_nav_top %}
+<!-- overide but not show content -->
+{% endblock right_nav_top %}

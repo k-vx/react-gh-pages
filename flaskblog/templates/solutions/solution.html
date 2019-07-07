@@ -1,9 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
-<article class="media content-section">
+<div class="media content-section">
     <div class="media-body">
         <p class="markdown-body article-content">{{ solution.description_render_markdown() | safe }}</p>
         <p class="markdown-body article-content">{{ solution.solution_render_markdown() | safe }}</p>
     </div>
-</article>
+</div>
 {% endblock content %}
+
+{% block right_nav_top %}
+<!-- overide but not show content -->
+{% endblock right_nav_top %}

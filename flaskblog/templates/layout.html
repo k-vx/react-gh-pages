@@ -29,7 +29,6 @@
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
                     <a class="nav-item nav-link" href="{{ url_for('solutions.solutions_all') }}">OJ solutions</a>
-                    <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
@@ -65,23 +64,31 @@
         {% endblock content %}
         </div>
         <div class="col-md-4">
-            <div class="content-section">
-                    <h3>Our Sidebar</h3>
-                    <p class='text-muted'>You can put any information here you'd like.</p>    
-            </div>
-            {% block right_nav %}
-            {% endblock right_nav %}
-            <!-- <div class="content-section">
-                <h3>Our Sidebar</h3>
-                <p class='text-muted'>You can put any information here you'd like.
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-light">Latest Posts</li>
-                    <li class="list-group-item list-group-item-light">Announcements</li>
-                    <li class="list-group-item list-group-item-light">Calendars</li>
-                    <li class="list-group-item list-group-item-light">etc</li>
-                </ul>
-                </p>
-            </div> -->
+            {% block right_nav_top %}
+                <div class="content-section">
+                    <h3>My Space</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">
+                            <a class="link-no-dec" href="{{ url_for('solutions.solutions_all') }}">TimeLine</a>
+                        </li>
+                        <li class="list-group-item list-group-item-light target-blank">
+                            <a class="link-no-dec" target="blank" href="https://github.com/LeoSirius">GitHub</a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a class="link-no-dec" href="{{ url_for('main.about') }}">About</a>
+                        </li>            
+                    </ul>
+                </div>
+                <div class="content-section">
+                    <h3>Community<span class='text-muted'>(QQ Groups)</span></h3>
+                    <p class='text-muted'>python web - <span>863309936</span></p>
+                    <p class='text-muted'>algorithm -  <span>897173129</span></p>
+                </div>
+            {% endblock right_nav_top %}
+            {% block right_nav_categories %}{% endblock right_nav_categories %}
+        </div>
+        <div class="col-md-12">
+            {% block about %}{% endblock about %}
         </div>
     </div>
 </main>
@@ -91,5 +98,21 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script type="application/javascript">
+{% block scripts %}
+$(document).ready(function(){
+    $("li.list-group-item").not(".target-blank").click(function(){
+        location.href =  $(this).children('a').attr("href");
+    })
+    $("li.target-blank").click(function(){
+        window.open($(this).children('a').attr("href"),"blank");
+    })
+});
+{% endblock scripts %}
+</script>
+
+
+
 </body>
 </html>
