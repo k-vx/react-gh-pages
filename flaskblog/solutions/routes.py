@@ -7,7 +7,7 @@ solutions = Blueprint('solutions', __name__)
 @solutions.route('/solutions')
 def solutions_all():
     page = request.args.get('page', 1, type=int)
-    solutions = Solution.query.order_by(Solution.date_posted.desc()).paginate(page=page, per_page=20)
+    solutions = Solution.query.order_by(Solution.id.asc()).paginate(page=page, per_page=20)
     solution_categories = SolutionCategory.query.all()
     return render_template('solutions/solutions.html', solutions=solutions, solution_categories=solution_categories)
 
@@ -16,7 +16,7 @@ def solutions_all():
 def solutions_by_category(category):
     page = request.args.get('page', 1, type=int)
     category = SolutionCategory.query.filter_by(name=category).first_or_404()
-    solutions = Solution.query.filter_by(category=category).order_by(Solution.date_posted.desc()).paginate(page=page, per_page=3)
+    solutions = Solution.query.filter_by(category=category).order_by(Solution.sub_id.asc()).paginate(page=page, per_page=20)
     solution_categories = SolutionCategory.query.all()
     return render_template('solutions/solutions.html', solutions=solutions, solution_categories=solution_categories, category=category)
 
