@@ -24,9 +24,10 @@ class CustomGeneralModelView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.is_admin
 
-class NoContentModelView(CustomGeneralModelView):
-    # hide content column in some tables, it's too much to show
-    column_exclude_list = ['content']
+class HideSomeColumnModelView(CustomGeneralModelView):
+    # hide content column for Post
+    # hide description, solution for solution
+    column_exclude_list = ['content', 'description', 'solutions']
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -43,9 +44,9 @@ def create_app(config_class=Config):
     SolutionCategory,
     )
     admin.add_view(CustomGeneralModelView(User, db.session))
-    admin.add_view(NoContentModelView(Post, db.session))
+    admin.add_view(HideSomeColumnModelView(Post, db.session))
     admin.add_view(CustomGeneralModelView(PostCategory, db.session))
-    admin.add_view(NoContentModelView(Solution, db.session))
+    admin.add_view(HideSomeColumnModelView(Solution, db.session))
     admin.add_view(CustomGeneralModelView(SolutionCategory, db.session))
 
 
