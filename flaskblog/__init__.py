@@ -27,7 +27,7 @@ class CustomGeneralModelView(ModelView):
 class HideSomeColumnModelView(CustomGeneralModelView):
     # hide content column for Post
     # hide description, solution for solution
-    column_exclude_list = ['content', 'description', 'solutions']
+    column_exclude_list = ['content', 'description', 'solution']
 
 def create_app(config_class=Config):
     app = Flask(__name__)
