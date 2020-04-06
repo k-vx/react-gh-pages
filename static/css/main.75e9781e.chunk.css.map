@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.css"],"names":[],"mappings":"AAAA,YACI,cACF,CAEA,mBACE,eAAgB,CAChB,gBACF","file":"main.75e9781e.chunk.css","sourcesContent":[".work-title {\n    font-size: 30px;\n  }\n  \n  .work-main-content {\n    margin-top: 20px;\n    margin-left: 30px;\n  }"]}
