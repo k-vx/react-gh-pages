@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <div class="container">
         <h1 class="mt-4">Hi~</h1>
-        <h2 class="mb-5">I'm Leo Sirius, a senior markdown engineer. :)</h2>
+        <h2 class="mb-5">I'm Leo Sirius, a senior markdown engineer ^.)</h2>
         <p class="mt-5 font-weight-bold">You can contact me through following ways</p>
         <ul>
           <li><span class="font-weight-bold">Emails: </span>is.li.xiaoyu@qq.com, leosirius666@gmail.com (choose one, both works)</li>
